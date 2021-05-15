@@ -7,7 +7,7 @@ secret = "ZcxdHsdDPhrdmiCCxp7bVMVdxxZtlx7sUJgZAZ52"
 
 def get_target_price(ticker, k):
     """변동성 돌파 전략으로 매수 목표가 조회"""
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=4)
+    df = pyupbit.get_ohlcv(ticker, interval="day", count=30)
     target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return target_price
 
@@ -43,7 +43,7 @@ while True:
         end_time = start_time + datetime.timedelta(days=1)
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price("KRW-EOS", 0.3)
+            target_price = get_target_price("KRW-EOS", 0.5)
             current_price = get_current_price("KRW-EOS")
             if target_price < current_price:
                 krw = get_balance("KRW")
